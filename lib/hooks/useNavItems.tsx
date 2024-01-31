@@ -172,18 +172,19 @@ export default function useNavItems(): ReturnType {
         isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
         subItems: apiNavItems,
       },
-      {
-        text: 'Other',
-        icon: 'gear',
-        subItems: [
-          {
-            text: 'Verify contract',
-            nextRoute: { pathname: '/contract-verification' as const },
-            isActive: pathname.startsWith('/contract-verification'),
-          },
-          ...config.UI.sidebar.otherLinks,
-        ],
-      },
+      // TODO: disable other
+      // {
+      //   text: 'Other',
+      //   icon: 'gear',
+      //   subItems: [
+      //     {
+      //       text: 'Verify contract',
+      //       nextRoute: { pathname: '/contract-verification' as const },
+      //       isActive: pathname.startsWith('/contract-verification'),
+      //     },
+      //     ...config.UI.sidebar.otherLinks,
+      //   ],
+      // },
     ].filter(Boolean);
 
     const accountNavItems: ReturnType['accountNavItems'] = [
