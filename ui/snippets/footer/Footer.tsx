@@ -120,7 +120,7 @@ const Footer = () => {
       <Box gridArea={ gridArea }>
         <Link fontSize="xs" href="https://explorer.seekscanner.com">explorer.seekscanner.com</Link>
         <Text mt={ 3 } fontSize="xs">
-          Seek Explorer is a tool for inspecting and analyzing the Seek Blockchain. Powered by blockscout.
+          Seek Explorer is a tool for inspecting and analyzing the Seek Chain Network. Powered by blockscout.
         </Text>
         <VStack spacing={ 1 } mt={ 6 } alignItems="start">
           { apiVersionUrl && (

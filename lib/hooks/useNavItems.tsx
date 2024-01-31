@@ -46,13 +46,14 @@ export default function useNavItems(): ReturnType {
       icon: 'transactions',
       isActive: pathname === '/txs' || pathname === '/tx/[hash]',
     };
-    const verifiedContracts: NavItem | null =
-     {
-       text: 'Verified contracts',
-       nextRoute: { pathname: '/verified-contracts' as const },
-       icon: 'verified',
-       isActive: pathname === '/verified-contracts',
-     };
+    // TODO: hide verified contracts
+    // const verifiedContracts: NavItem | null =
+    //  {
+    //    text: 'Verified contracts',
+    //    nextRoute: { pathname: '/verified-contracts' as const },
+    //    icon: 'verified',
+    //    isActive: pathname === '/verified-contracts',
+    //  };
     const ensLookup = config.features.nameService.isEnabled ? {
       text: 'ENS lookup',
       nextRoute: { pathname: '/name-domains' as const },
