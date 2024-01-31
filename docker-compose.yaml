@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  blockscout-frontend:
+    build: .
+    container_name: blockscout-frontend
+    restart: unless-stopped
+    env_file:
+      -  ./common-frontend.env
+    networks:
+      - proxy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # comment if not needed
+    labels:    
+      - "traefik.enable=true"
+      - "traefik.http.routers.blockscout-frontend.entrypoints=http"
+      - "traefik.http.routers.blockscout-frontend.rule=Host(`testnet-explorer.seekscanner.com`)"
+      - "traefik.http.routers.blockscout-frontend-secure.entrypoints=https"
+      - "traefik.http.routers.blockscout-frontend-secure.rule=Host(`testnet-explorer.seekscanner.com`)"
+      - "traefik.http.routers.blockscout-frontend-secure.tls=true"
+      - "traefik.http.routers.blockscout-frontend-secure.tls.certresolver=http"
+      - "traefik.http.routers.blockscout-frontend-secure.service=blockscout-frontend"
+      - "traefik.http.services.blockscout-frontend.loadbalancer.server.port=16001"
+      - "traefik.docker.network=proxy"
+
+# comment if not needed
+networks:
+  proxy:
+    external: true

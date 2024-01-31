@@ -127,8 +127,8 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 16001
 
-ENV PORT 3000
+ENV PORT 16001
 
 CMD ["node", "server.js"]
