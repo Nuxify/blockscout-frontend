@@ -75,7 +75,8 @@ export default function useNavItems(): ReturnType {
         ],
         [
           topAccounts,
-          verifiedContracts,
+          // TODO: disable verified contract
+          // verifiedContracts,
           ensLookup,
         ].filter(Boolean),
       ];
@@ -97,7 +98,8 @@ export default function useNavItems(): ReturnType {
         ],
         [
           topAccounts,
-          verifiedContracts,
+          // TODO: disable verified contract
+          // verifiedContracts,
           ensLookup,
         ].filter(Boolean),
       ];
@@ -106,7 +108,8 @@ export default function useNavItems(): ReturnType {
         txs,
         blocks,
         topAccounts,
-        verifiedContracts,
+        // TODO: disable verified contract
+        // verifiedContracts,
         ensLookup,
         config.features.beaconChain.isEnabled && {
           text: 'Withdrawals',
