@@ -16,9 +16,9 @@ services:
     labels:    
       - "traefik.enable=true"
       - "traefik.http.routers.blockscout-frontend.entrypoints=http"
-      - "traefik.http.routers.blockscout-frontend.rule=Host(`testnet-explorer.seekscanner.com`)"
+      - "traefik.http.routers.blockscout-frontend.rule=Host(`nux-testnet-explorer.nuxify.tech`)"
       - "traefik.http.routers.blockscout-frontend-secure.entrypoints=https"
-      - "traefik.http.routers.blockscout-frontend-secure.rule=Host(`testnet-explorer.seekscanner.com`)"
+      - "traefik.http.routers.blockscout-frontend-secure.rule=Host(`nux-testnet-explorer.nuxify.tech`)"
       - "traefik.http.routers.blockscout-frontend-secure.tls=true"
       - "traefik.http.routers.blockscout-frontend-secure.tls.certresolver=http"
       - "traefik.http.routers.blockscout-frontend-secure.service=blockscout-frontend"
