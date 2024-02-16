@@ -118,9 +118,9 @@ const Footer = () => {
   const renderProjectInfo = React.useCallback((gridArea?: GridProps['gridArea']) => {
     return (
       <Box gridArea={ gridArea }>
-        <Link fontSize="xs" href="https://explorer.seekscanner.com">explorer.seekscanner.com</Link>
+        <Link fontSize="xs" href="https://nux-explorer.nuxify.tech">nux-explorer.nuxify.tech</Link>
         <Text mt={ 3 } fontSize="xs">
-          Seek Explorer is a tool for inspecting and analyzing the Seek Chain Network. Powered by blockscout.
+          NEC Explorer is a tool for inspecting and analyzing the Nux Enterprise Chain Network. Powered by blockscout.
         </Text>
         <VStack spacing={ 1 } mt={ 6 } alignItems="start">
           { apiVersionUrl && (
