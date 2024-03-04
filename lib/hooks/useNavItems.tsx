@@ -135,7 +135,8 @@ export default function useNavItems(): ReturnType {
         ],
         [
           blocks,
-          userOps,
+          // TODO: disable
+          // userOps,
           topAccounts,
           // TODO: disable verified contract
           // verifiedContracts,
