@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from 'next';
 
 import config from 'configs/app';
+const rollupFeature = config.features.rollup;
 
 export type Props = {
   cookies: string;
@@ -48,8 +49,8 @@ export const verifiedAddresses: GetServerSideProps<Props> = async(context) => {
   return account(context);
 };
 
-export const beaconChain: GetServerSideProps<Props> = async(context) => {
-  if (!config.features.beaconChain.isEnabled) {
+export const deposits: GetServerSideProps<Props> = async(context) => {
+  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium'))) {
     return {
       notFound: true,
     };
@@ -58,8 +59,11 @@ export const beaconChain: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const L2: GetServerSideProps<Props> = async(context) => {
-  if (!config.features.optimisticRollup.isEnabled) {
+export const withdrawals: GetServerSideProps<Props> = async(context) => {
+  if (
+    !config.features.beaconChain.isEnabled &&
+    !(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium'))
+  ) {
     return {
       notFound: true,
     };
@@ -68,8 +72,28 @@ export const L2: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const zkEvmL2: GetServerSideProps<Props> = async(context) => {
-  if (!config.features.zkEvmRollup.isEnabled) {
+export const rollup: GetServerSideProps<Props> = async(context) => {
+  if (!config.features.rollup.isEnabled) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const optimisticRollup: GetServerSideProps<Props> = async(context) => {
+  if (!(rollupFeature.isEnabled && rollupFeature.type === 'optimistic')) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const zkEvmRollup: GetServerSideProps<Props> = async(context) => {
+  if (!(rollupFeature.isEnabled && rollupFeature.type === 'zkEvm')) {
     return {
       notFound: true,
     };
@@ -140,6 +164,36 @@ export const nameService: GetServerSideProps<Props> = async(context) => {
 
 export const accounts: GetServerSideProps<Props> = async(context) => {
   if (config.UI.views.address.hiddenViews?.top_accounts) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const userOps: GetServerSideProps<Props> = async(context) => {
+  if (!config.features.userOps.isEnabled) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const validators: GetServerSideProps<Props> = async(context) => {
+  if (!config.features.validators.isEnabled) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const gasTracker: GetServerSideProps<Props> = async(context) => {
+  if (!config.features.gasTracker.isEnabled) {
     return {
       notFound: true,
     };
