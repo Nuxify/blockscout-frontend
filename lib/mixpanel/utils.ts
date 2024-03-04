@@ -17,7 +17,8 @@ export enum EventTypes {
   PAGE_WIDGET = 'Page widget',
   TX_INTERPRETATION_INTERACTION = 'Transaction interpratetion interaction',
   EXPERIMENT_STARTED = 'Experiment started',
-  FILTERS = 'Filters'
+  FILTERS = 'Filters',
+  BUTTON_CLICK = 'Button click',
 }
 
 /* eslint-disable @typescript-eslint/indent */
@@ -70,7 +71,7 @@ Type extends EventTypes.VERIFY_TOKEN ? {
   'Action': 'Form opened' | 'Submit';
 } :
 Type extends EventTypes.WALLET_CONNECT ? {
-  'Source': 'Header' | 'Smart contracts';
+  'Source': 'Header' | 'Smart contracts' | 'Swap button';
   'Status': 'Started' | 'Connected';
 } :
 Type extends EventTypes.WALLET_ACTION ? {
@@ -96,7 +97,7 @@ Type extends EventTypes.PAGE_WIDGET ? (
   }
 ) :
 Type extends EventTypes.TX_INTERPRETATION_INTERACTION ? {
-  'Type': 'Address click' | 'Token click';
+  'Type': 'Address click' | 'Token click' | 'Domain click';
 } :
 Type extends EventTypes.EXPERIMENT_STARTED ? {
   'Experiment name': string;
@@ -106,6 +107,10 @@ Type extends EventTypes.EXPERIMENT_STARTED ? {
 Type extends EventTypes.FILTERS ? {
   'Source': 'Marketplace';
   'Filter name': string;
+} :
+Type extends EventTypes.BUTTON_CLICK ? {
+  'Content': 'Swap button';
+  'Source': string;
 } :
 undefined;
 /* eslint-enable @typescript-eslint/indent */

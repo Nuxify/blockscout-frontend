@@ -1,5 +1,4 @@
 import _pickBy from 'lodash/pickBy';
-import _unique from 'lodash/uniq';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -10,6 +9,7 @@ import * as mixpanel from 'lib/mixpanel/index';
 import getQueryParamString from 'lib/router/getQueryParamString';
 
 import useMarketplaceApps from './useMarketplaceApps';
+import useMarketplaceCategories from './useMarketplaceCategories';
 
 const favoriteAppsLocalStorageKey = 'favoriteApps';
 
@@ -30,6 +30,7 @@ export default function useMarketplace() {
   const [ selectedCategoryId, setSelectedCategoryId ] = React.useState<string>(MarketplaceCategory.ALL);
   const [ filterQuery, setFilterQuery ] = React.useState(defaultFilterQuery);
   const [ favoriteApps, setFavoriteApps ] = React.useState<Array<string>>([]);
+  const [ isFavoriteAppsLoaded, setIsFavoriteAppsLoaded ] = React.useState<boolean>(false);
   const [ isAppInfoModalOpen, setIsAppInfoModalOpen ] = React.useState<boolean>(false);
   const [ isDisclaimerModalOpen, setIsDisclaimerModalOpen ] = React.useState<boolean>(false);
 
@@ -71,19 +72,21 @@ export default function useMarketplace() {
     setSelectedCategoryId(newCategory);
   }, []);
 
-  const { isPlaceholderData, isError, error, data, displayedApps } = useMarketplaceApps(debouncedFilterQuery, selectedCategoryId, favoriteApps);
-
-  const categories = React.useMemo(() => {
-    return _unique(data?.map(app => app.categories).flat()) || [];
-  }, [ data ]);
+  const {
+    isPlaceholderData, isError, error, data, displayedApps,
+  } = useMarketplaceApps(debouncedFilterQuery, selectedCategoryId, favoriteApps, isFavoriteAppsLoaded);
+  const {
+    isPlaceholderData: isCategoriesPlaceholderData, data: categories,
+  } = useMarketplaceCategories(data, isPlaceholderData);
 
   React.useEffect(() => {
     setFavoriteApps(getFavoriteApps());
+    setIsFavoriteAppsLoaded(true);
   }, [ ]);
 
   React.useEffect(() => {
     if (!isPlaceholderData && !isError) {
-      const isValidDefaultCategory = categories.includes(defaultCategoryId);
+      const isValidDefaultCategory = categories.map(c => c.name).includes(defaultCategoryId);
       isValidDefaultCategory && setSelectedCategoryId(defaultCategoryId);
     }
     // run only when data is loaded
@@ -128,6 +131,8 @@ export default function useMarketplace() {
     isAppInfoModalOpen,
     isDisclaimerModalOpen,
     showDisclaimer,
+    appsTotal: data?.length || 0,
+    isCategoriesPlaceholderData,
   }), [
     selectedCategoryId,
     categories,
@@ -145,5 +150,7 @@ export default function useMarketplace() {
     isAppInfoModalOpen,
     isDisclaimerModalOpen,
     showDisclaimer,
+    data?.length,
+    isCategoriesPlaceholderData,
   ]);
 }
